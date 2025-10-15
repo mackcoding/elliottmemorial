@@ -54,6 +54,7 @@ The GitHub Actions workflow (`deploy.yml`) handles everything automatically:
 ├── scripts/                    # Build tools
 │   ├── indexer.go             # Photo gallery generator
 │   └── go.mod                 # Go module file
+├── generate_description_gemini.ps1 # AI description generator
 └── README.md                  # This file
 ```
 
@@ -64,7 +65,7 @@ To create your own memorial website:
 1. **Fork this repository** to your GitHub account
 2. **Edit the content** in `web/index.html` to reflect your loved one
 3. **Add photos** to the `web/photos/` directory
-4. **Update descriptions** in `web/photos/description.json`
+4. **Update descriptions** in `web/photos/description.json` manually, or use the AI script (see below).
 5. **Push to main branch** - GitHub Actions will automatically build and deploy
 
 ### Adding Photos
@@ -79,13 +80,38 @@ To create your own memorial website:
 ```
 3. Push changes - the gallery will automatically update
 
+## 🖼️ Generating Descriptions with AI
+
+This project includes a PowerShell script, `generate_description_gemini.ps1`, to automatically generate photo descriptions using AI.
+
+### Requirements
+
+-   The [Google Gemini CLI](https://github.com/google/gemini-cli). Make sure it's installed and authenticated.
+
+### How to Use
+
+1.  Place your new photos in the `web/photos/` directory.
+2.  Open a PowerShell terminal at the root of the project.
+3.  Run the script:
+    ```powershell
+    .\generate_description_gemini.ps1
+    ```
+4.  The script will find photos without descriptions, call the Gemini API to generate them, and save them to `web/photos/description.json`.
+
+You can customize the prompt inside the script by editing the `$PromptTemplate` variable.
+
 ## 📝 License & Reuse
 
 **Anyone is free to reuse this code for their own memorial websites.**
 
 This project is shared with love in hopes that it can help others create beautiful tributes for their beloved companions. Whether it's for a pet, family member, or friend, feel free to adapt this codebase for your own memorial needs.
 
-No attribution required, though it would be appreciated. The most important thing is that this helps preserve precious memories.
+## 🤝 Contributing & Feedback
+
+This project, including this README, was created with the assistance of AI. We welcome contributions and feedback!
+
+-   **Showcase Your Memorial**: If you use this template, we would be delighted to see it. Please [create a GitHub issue](https://github.com/mackcoding/elliottmemorial/issues/new) to share a link to your project!
+-   **Contribute Changes**: Fixes and improvements are always welcome! Please feel free to submit a Pull Request with a detailed description of your changes.
 
 ## 🛠️ Technical Requirements
 

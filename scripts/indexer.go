@@ -40,7 +40,11 @@ func main() {
 
 	photos, err = readDescriptions(photos)
 	if err != nil {
-		log.Fatalf("Error loading descriptions: %v", err)
+		if os.IsNotExist(err) {
+			log.Println("description.json not found, continuing without descriptions.")
+		} else {
+			log.Printf("Warning: could not read descriptions: %v. Continuing without them.", err)
+		}
 	}
 
 	err = generateIndex(photos)
@@ -73,7 +77,8 @@ func generatePages(photos map[string]string) error {
 	}
 
 	totalPages := (len(pages) + MaxPerPage - 1) / MaxPerPage
-	fmt.Printf("Creating %d page files...\n", totalPages)
+	fmt.Printf("Creating %d page files...
+", totalPages)
 
 	for pageNum := 1; pageNum <= totalPages; pageNum++ {
 		startIndex := (pageNum - 1) * MaxPerPage
@@ -86,7 +91,7 @@ func generatePages(photos map[string]string) error {
 			return err
 		}
 
-		pageFilename := fmt.Sprintf("%spage%d.json", IndexPath, pageNum)
+		pageFilename := filepath.Join(IndexPath, fmt.Sprintf("page%d.json", pageNum))
 		err = os.WriteFile(pageFilename, jsonData, 0644)
 		if err != nil {
 			return err
@@ -117,13 +122,15 @@ func generateIndex(photos map[string]string) error {
 		return err
 	}
 
-	fmt.Printf("Index created with %d pages and %d images\n", totalPages, totalImages)
-	return os.WriteFile(IndexPath+"index.json", data, 0644)
+	fmt.Printf("Index created with %d pages and %d images
+", totalPages, totalImages)
+	return os.WriteFile(filepath.Join(IndexPath, "index.json"), data, 0644)
 }
 
 func readDescriptions(photos map[string]string) (map[string]string, error) {
 	fmt.Println("Loading descriptions...")
-	data, err := os.ReadFile(PhotoPath + "description.json")
+	descriptionPath := filepath.Join(PhotoPath, "description.json")
+	data, err := os.ReadFile(descriptionPath)
 	if err != nil {
 		return photos, err
 	}
@@ -140,7 +147,8 @@ func readDescriptions(photos map[string]string) (map[string]string, error) {
 		}
 	}
 
-	fmt.Printf("Applied descriptions to %d photos\n", len(descriptions))
+	fmt.Printf("Applied descriptions to %d photos
+", len(descriptions))
 	return photos, nil
 }
 
@@ -159,7 +167,8 @@ func loadPhotos() (map[string]string, error) {
 		photos[file.Name()] = ""
 	}
 
-	fmt.Printf("Found %d photos\n", len(photos))
+	fmt.Printf("Found %d photos
+", len(photos))
 	return photos, nil
 }
 
@@ -172,7 +181,7 @@ func cleanIndexDirectory() error {
 
 	for _, file := range files {
 		if filepath.Ext(file.Name()) == ".json" {
-			err := os.Remove(IndexPath + file.Name())
+			err := os.Remove(filepath.Join(IndexPath, file.Name()))
 			if err != nil {
 				return err
 			}
@@ -181,11 +190,4 @@ func cleanIndexDirectory() error {
 
 	fmt.Println("Index directory cleaned")
 	return nil
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
 }
