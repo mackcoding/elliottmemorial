@@ -3,9 +3,6 @@ var totalPages = index.total_pages;
 var currentPage = 1;
 let isLoading = false;
 
-await generatePage();
-setupLazyLoad();
-
 function setupLazyLoad() {
   let ticking = false;
 
@@ -83,3 +80,8 @@ async function getIndex(url) {
     console.error(`Error fetching '${url}', message: ${error}`);
   }
 }
+
+(async () => {
+  await generatePage();
+  setupLazyLoad();
+})();
