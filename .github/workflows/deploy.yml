@@ -38,6 +38,7 @@ jobs:
         with:
           commit_message: "Generate gallery files"
           file_pattern: web/index/*.json
+          add_options: '--force'
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
