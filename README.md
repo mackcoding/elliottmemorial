@@ -23,10 +23,10 @@ This memorial website is built as a static site hosted on GitHub Pages with an a
 
 The heart of this site is the automated photo gallery powered by a Go script (`scripts/indexer.go`):
 
-1. **Photo Scanning**: Scans the `docs/photos/` directory for image files
-2. **Description Loading**: Reads descriptions from `docs/photos/description.json`
+1. **Photo Scanning**: Scans the `web/photos/` directory for image files
+2. **Description Loading**: Reads descriptions from `web/photos/description.json`
 3. **Pagination**: Automatically creates paginated gallery data (15 photos per page)
-4. **JSON Generation**: Creates `index.json` and `pageN.json` files in `docs/index/`
+4. **JSON Generation**: Creates `index.json` and `pageN.json` files in `web/index/`
 5. **Frontend Integration**: JavaScript loads and displays the gallery dynamically
 
 ### Automated Workflow
@@ -43,7 +43,7 @@ The GitHub Actions workflow (`deploy.yml`) handles everything automatically:
 ```
 ├── .github/workflows/
 │   └── deploy.yml    # CI/CD workflow
-├── docs/                       # Website root
+├── web/                       # Website root
 │   ├── photos/                 # Gallery photos
 │   │   └── description.json    # Photo descriptions
 │   ├── no-index-photos/        # Non-gallery photos
@@ -62,15 +62,15 @@ The GitHub Actions workflow (`deploy.yml`) handles everything automatically:
 To create your own memorial website:
 
 1. **Fork this repository** to your GitHub account
-2. **Edit the content** in `docs/index.html` to reflect your loved one
-3. **Add photos** to the `docs/photos/` directory
-4. **Update descriptions** in `docs/photos/description.json`
+2. **Edit the content** in `web/index.html` to reflect your loved one
+3. **Add photos** to the `web/photos/` directory
+4. **Update descriptions** in `web/photos/description.json`
 5. **Push to main branch** - GitHub Actions will automatically build and deploy
 
 ### Adding Photos
 
-1. Place image files in `docs/photos/`
-2. Add descriptions to `docs/photos/description.json`:
+1. Place image files in `web/photos/`
+2. Add descriptions to `web/photos/description.json`:
 ```json
 {
     "photo1.jpg": "Description of photo 1",

@@ -20,8 +20,8 @@ type Photo struct {
 }
 
 const (
-	IndexPath  = "docs/index/"
-	PhotoPath  = "docs/photos/"
+	IndexPath  = "web/index/"
+	PhotoPath  = "web/photos/"
 	MaxPerPage = 15
 )
 
