@@ -22,7 +22,7 @@ type Photo struct {
 const (
 	IndexPath  = "web/index/"
 	PhotoPath  = "web/photos/"
-	MaxPerPage = 5
+	MaxPerPage = 15
 )
 
 func main() {
