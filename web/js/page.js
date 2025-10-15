@@ -3,19 +3,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalImg = document.getElementById("modalImage");
   const modalCaption = document.getElementById("modalCaption");
   const closeBtn = document.querySelector(".photo-modal-close");
-  const photosContainer = document.getElementById("photos");
 
-  photosContainer.addEventListener("click", function (e) {
-    if (e.target.matches(".memorial-card img")) {
+  document.addEventListener("click", function (e) {
+    if (e.target.matches(".card img, .memorial-card img")) {
       const img = e.target;
+      const card = img.closest(".card, .memorial-card");
+
+      if (!card) return;
+
       modal.classList.add("show");
       modalImg.src = img.src;
       modalImg.alt = img.alt;
 
-      const cardBody = img
-        .closest(".memorial-card")
-        .querySelector(".card-body p");
-      modalCaption.textContent = cardBody ? cardBody.textContent : img.alt;
+      const captionEl = card.querySelector(".card-text, .card-body p");
+      modalCaption.textContent = captionEl ? captionEl.textContent : img.alt;
     }
   });
 

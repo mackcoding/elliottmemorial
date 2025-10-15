@@ -77,8 +77,7 @@ func generatePages(photos map[string]string) error {
 	}
 
 	totalPages := (len(pages) + MaxPerPage - 1) / MaxPerPage
-	fmt.Printf("Creating %d page files...
-", totalPages)
+	fmt.Printf("Creating %d page files...", totalPages)
 
 	for pageNum := 1; pageNum <= totalPages; pageNum++ {
 		startIndex := (pageNum - 1) * MaxPerPage
@@ -122,8 +121,7 @@ func generateIndex(photos map[string]string) error {
 		return err
 	}
 
-	fmt.Printf("Index created with %d pages and %d images
-", totalPages, totalImages)
+	fmt.Printf("Index created with %d pages and %d images", totalPages, totalImages)
 	return os.WriteFile(filepath.Join(IndexPath, "index.json"), data, 0644)
 }
 
@@ -147,8 +145,7 @@ func readDescriptions(photos map[string]string) (map[string]string, error) {
 		}
 	}
 
-	fmt.Printf("Applied descriptions to %d photos
-", len(descriptions))
+	fmt.Printf("Applied descriptions to %d photos", len(descriptions))
 	return photos, nil
 }
 
@@ -167,8 +164,7 @@ func loadPhotos() (map[string]string, error) {
 		photos[file.Name()] = ""
 	}
 
-	fmt.Printf("Found %d photos
-", len(photos))
+	fmt.Printf("Found %d photos", len(photos))
 	return photos, nil
 }
 
