@@ -1,5 +1,5 @@
-var index = await getIndex("index");
-var totalPages = index.total_pages;
+var index;
+var totalPages;
 var currentPage = 1;
 let isLoading = false;
 
@@ -82,6 +82,8 @@ async function getIndex(url) {
 }
 
 (async () => {
+  index = await getIndex("index");
+  totalPages = index.total_pages;
   await generatePage();
   setupLazyLoad();
 })();
