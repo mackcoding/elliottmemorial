@@ -28,6 +28,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: stable
+          cache: false
 
       - name: Generate gallery files
         run: mkdir -p index && cd scripts && go run indexer.go
