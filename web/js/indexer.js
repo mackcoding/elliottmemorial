@@ -1,7 +1,14 @@
-var index;
-var totalPages;
-var currentPage = 1;
+let index;
+let totalPages;
+let currentPage = 1;
 let isLoading = false;
+
+async function init() {
+  index = await getIndex("index");
+  totalPages = index.total_pages;
+  await generatePage();
+  setupLazyLoad();
+}
 
 function setupLazyLoad() {
   let ticking = false;
@@ -81,9 +88,4 @@ async function getIndex(url) {
   }
 }
 
-(async () => {
-  index = await getIndex("index");
-  totalPages = index.total_pages;
-  await generatePage();
-  setupLazyLoad();
-})();
+init();
