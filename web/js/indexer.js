@@ -1,3 +1,54 @@
+var index = await getIndex("index");
+var totalPages = index.total_pages;
+var currentPage = 1;
+let isLoading = false;
+
+await generatePage();
+setupLazyLoad();
+
+function setupLazyLoad() {
+  let ticking = false;
+
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      requestAnimationFrame(async () => {
+        if (
+          window.innerHeight + window.scrollY >=
+            document.body.offsetHeight - 1000 &&
+          !isLoading &&
+          currentPage < totalPages
+        ) {
+          isLoading = true;
+          currentPage++;
+          await generatePage();
+          isLoading = false;
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+}
+
+async function generatePage() {
+  try {
+    var page = await getIndex("page" + currentPage);
+    if (!page || !Array.isArray(page)) return;
+
+    const container = document.getElementById("photos");
+    let cards = "";
+
+    page.forEach((photo) => {
+      cards += createMemorialCard(photo);
+    });
+
+    container.innerHTML += cards;
+  } catch (error) {
+    console.error(`Error generating page ${currentPage}:`, error);
+    isLoading = false;
+  }
+}
+
 function createMemorialCard(photo) {
   return `
         <div class="col-md-6 col-lg-4 mb-4">
@@ -17,7 +68,7 @@ function createMemorialCard(photo) {
 }
 
 async function getIndex(url) {
-  url = "index/" + url;
+  url = "index/" + url + ".json";
   try {
     const response = await fetch(url);
 
@@ -29,6 +80,6 @@ async function getIndex(url) {
     console.log(data);
     return data;
   } catch (error) {
-    console.error(`Error fetching '${url}', message: {error}`);
+    console.error(`Error fetching '${url}', message: ${error}`);
   }
 }
