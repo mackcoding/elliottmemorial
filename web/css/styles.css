@@ -59,6 +59,9 @@ body {
     margin-bottom: 30px;
     transition: all 0.3s ease;
     border: 1px solid #404040;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .memorial-card:hover {
@@ -68,10 +71,8 @@ body {
 
 .memorial-card img {
     width: 100%;
-    height: auto;
-    min-height: 200px;
-    max-height: 300px;
-    object-fit: contain;
+    height: 300px;
+    object-fit: cover;
     background-color: #1a1a1a;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -83,6 +84,10 @@ body {
 
 .memorial-card .card-body {
     padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .memorial-card .card-body p {
@@ -208,7 +213,7 @@ footer a:hover iconify-icon {
     }
 
     .memorial-card img {
-        height: 200px;
+        height: 250px;
     }
 }
 
@@ -249,6 +254,17 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+/* Ensure Bootstrap columns use flexbox for consistent memorial card heights */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+[class*="col-"] {
+    display: flex;
+    flex-direction: column;
 }
 
 .photo-modal {
