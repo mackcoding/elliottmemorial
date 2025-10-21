@@ -7,10 +7,11 @@
 
 # --- Configuration ---
 $OutputFile = "description.json"
-$PromptTemplate = "Describe this photo of Elliott the dog in 1-2 sentences. Elliott is the yellow lab, Renzo is a German Shepherd. Make it heartwarming and slightly humorous. Return ONLY the description text, no extra formatting or explanations. @{0}"
+$PromptTemplate = "Describe this photo of Elliott the dog in 1-2 sentences. Elliott is the yellow lab, Renzo is a German Shepherd. Any other dog is a random dog at the dog park. Make it heartwarming and slightly humorous. Return ONLY the description text, no extra formatting or explanations. @{0}"
 $MAX_RETRIES = 3
 $RETRY_DELAY = 5  # seconds
 $RATE_LIMIT_DELAY = 60  # seconds to wait when hitting rate limits
+$GeminiModel = "gemini-2.5-pro" # Specify the Gemini model to use
 $SUCCESS_DELAY = 2  # seconds between successful requests
 
 # --- Script ---
@@ -75,7 +76,7 @@ function Process-Photo {
 
         # Call Gemini CLI and capture output
         $prompt = [string]::Format($PromptTemplate, $photo)
-        $description = & gemini $prompt 2>$null
+        $description = & gemini --model $GeminiModel $prompt 2>$null
 
         # Clean up the description
         $cleanDescription = ($description | Out-String).Trim()
